@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/Refresh_List"
+        android:orderInCategory="100"
+        android:title="Refresh List"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_home"
+        android:orderInCategory="100"
+        android:title="Home"
+        android:icon="@drawable/home"
+        app:showAsAction="ifRoom" />
+</menu>

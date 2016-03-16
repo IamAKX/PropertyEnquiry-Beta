@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent" android:layout_height="fill_parent">
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:padding="10dp"
+    android:layout_height="match_parent">
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/editTextSearch"
+        android:layout_marginTop="10dp"
+        android:hint="Property Name to Search..."
+        android:layout_gravity="center_horizontal" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/editTextSearch"
+        android:layout_marginTop="45dp"
+        android:textSize="15dp"
+        android:textStyle="bold"
+
+        android:text="Filter by"/>
+    <View
+        android:layout_marginTop="65dp"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:id="@+id/lineeee"
+        android:layout_below="@+id/editTextSearch"
+        android:background="#c0c0c0"
+        />
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="   Builder"
+        android:id="@+id/checkBoxBuilder"
+        android:button="@drawable/builder_checkbox"
+        android:layout_below="@+id/lineeee"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="10dp" />
+
+    <CheckBox
+        android:layout_marginTop="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="   Location"
+        android:button="@drawable/location_checkbox"
+        android:id="@+id/checkBoxLocation"
+        android:layout_below="@+id/checkBoxBuilder"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <CheckBox
+        android:layout_marginTop="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="   Type"
+        android:button="@drawable/type_checkbox"
+        android:id="@+id/checkBoxType"
+        android:layout_below="@+id/checkBoxLocation"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/spinnerBuilder"
+        android:layout_alignTop="@+id/checkBoxBuilder"
+        android:layout_toRightOf="@+id/checkBoxLocation"
+        android:layout_toEndOf="@+id/checkBoxLocation" />
+
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/spinnerLoaction"
+        android:layout_alignTop="@+id/checkBoxLocation"
+        android:layout_alignLeft="@+id/spinnerBuilder"
+        android:layout_alignStart="@+id/spinnerBuilder" />
+
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/spinnerType"
+        android:layout_alignTop="@+id/checkBoxType"
+        android:layout_alignLeft="@+id/spinnerLoaction"
+        android:layout_alignStart="@+id/spinnerLoaction" />
+
+    <View
+        android:layout_marginTop="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:id="@+id/lineee"
+        android:layout_below="@+id/spinnerType"
+        android:background="#c0c0c0"
+        />
+    <TextView
+        android:id="@+id/refresh_guide"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/lineee"
+        android:textColor="@color/gray"
+        android:textStyle="italic"
+        android:layout_marginTop="15dp"
+        android:text="@string/refresh_list"/>
+    <View
+        android:layout_marginTop="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_below="@+id/refresh_guide"
+        android:background="#c0c0c0"
+        />
+</RelativeLayout>
+</ScrollView>
