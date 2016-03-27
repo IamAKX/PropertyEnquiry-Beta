@@ -12,13 +12,6 @@
     tools:context="com.applications.akash.propertyenquiry.SearchActivity"
     tools:showIn="@layout/activity_search">
 
-    <android.support.v7.widget.RecyclerView
-        android:layout_height="match_parent"
-        android:layout_width="match_parent"
-        android:id="@+id/recyclerView"
-        android:scrollbars="vertical"
-        xmlns:android="http://schemas.android.com/apk/res/android">
-    </android.support.v7.widget.RecyclerView>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -31,4 +24,9 @@
         android:textColor="#50aaaaaa"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true" />
+    <WebView
+        android:id="@+id/webView1"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        />
 </RelativeLayout>

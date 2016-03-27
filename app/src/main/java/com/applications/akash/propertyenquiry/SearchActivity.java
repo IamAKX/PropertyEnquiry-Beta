@@ -9,6 +9,8 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,26 +23,15 @@ import java.util.ArrayList;
 
 public class SearchActivity extends AppCompatActivity {
 
-    private final HttpClient Client = new DefaultHttpClient();
-    private String Content;
-    private String Error = null;
 
 
-    ProgressDialog progressDialog;
-    View myView;
-    private RecyclerView recyclerView;
-    private ArrayList<PropertyCard> datas;
-    private RecyclerView.LayoutManager layoutManager;
-    private RecyclerView.Adapter adapter;
-
-
+    WebView webView;
     static String NAME = "null";
     static String BUILDER = "null";
     static String LOCATION = "null";
     static String TYPE = "null";
-    TextView textView;
 
-    static boolean firstTime = true;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,134 +39,56 @@ public class SearchActivity extends AppCompatActivity {
         setContentView(R.layout.activity_search);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-
-        new PropertyCardAdapter(getBaseContext());
-        recyclerView = (RecyclerView)findViewById(R.id.recyclerView);
-
-        progressDialog = new ProgressDialog(SearchActivity.this);
-        progressDialog.setTitle("Searching...");
-        progressDialog.setMessage("Please Wait while we fetch your property");
-        progressDialog.setCancelable(false);
-        datas =new ArrayList<PropertyCard>();
-
-
-        progressDialog.show();
+        webView = (WebView) findViewById(R.id.webView1);
         search_Property();
-        textView = (TextView)findViewById(R.id.textView4);
-        if(datas.size()!=0)
-            textView.setVisibility(View.GONE);
-        search_Property();
-
-        layoutManager = new LinearLayoutManager(getBaseContext(),LinearLayoutManager.VERTICAL,false);
-        recyclerView.setLayoutManager(layoutManager);
-        adapter = new PropertyCardAdapter(datas);
-        recyclerView.setAdapter(adapter);
-        datas.clear();
-
     }
 
 
 
     private void search_Property() {
-        int id=0;
-        String name="",builder="",address="",bhk="",price="",phone="",possession="",detail="",url="";
-        HttpConnection http = new HttpConnection("http://anamexamplecafe.esy.es/propertyenquiry/searchproperty.php");
-        http.text="";
-        String param="";
-        try {
-            param = URLEncoder.encode("type", "UTF-8")
-                    + "=" + URLEncoder.encode("new", "UTF-8");
-            param += "&" + URLEncoder.encode("name", "UTF-8")
-                    + "=" + URLEncoder.encode(NAME, "UTF-8");
-            param += "&" + URLEncoder.encode("builder", "UTF-8")
-                    + "=" + URLEncoder.encode(BUILDER, "UTF-8");
-            param += "&" + URLEncoder.encode("location", "UTF-8")
-                    + "=" + URLEncoder.encode(LOCATION, "UTF-8");
-            param += "&" + URLEncoder.encode("typeee", "UTF-8")
-                    + "=" + URLEncoder.encode(TYPE, "UTF-8");
-            http.sendPost(param);
-            Log.i("aaaaa",param);
-        }
-        catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
+        String url = "http://anamexamplecafe.esy.es/propertyenquiry/search.php?name="+NAME+"&builder="+BUILDER+"&location="+LOCATION+"&typeee="+TYPE;
 
-        Log.i("#*#*",NAME+LOCATION+BUILDER+TYPE);
-        String rply=http.serverReply();
-        int apla=0;
-        while(rply.equals(null)||rply.length()==0){
-            rply=http.serverReply().trim();
-            Log.i("xxxxx"," "+apla++);
-        }
-        Log.i("xxxx","  "+rply);
-        progressDialog.dismiss();
+        NAME = "null";
+        BUILDER = "null";
+        LOCATION = "null";
+        TYPE = "null";
 
-        if(rply.equals("noresult"))
-        {
-            
-            Toast.makeText(getBaseContext(),"No result found!!",Toast.LENGTH_SHORT).show();
-            return;
-        }
 
-        int i=0,x=0;
-        char ch;
-        String word = "";
+        webView.setWebViewClient(new WebViewClient() {
+            ProgressDialog progressDialog;
 
-        while(i<rply.length())
-        {
-            ch=rply.charAt(i);
-            if(ch!='#')
-            {
-
-                word+=ch;
+            //If you will not use this method url links are opeen in new brower not in webview
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                view.loadUrl(url);
+                return true;
             }
-            else
-            {
-                if(x==0)
-                    id=(Integer.parseInt(word.trim()));
-                else
-                if(x==1)
-                    name=word;
-                else
-                if(x==2)
-                    builder=word;
-                else
-                if(x==3)
-                    address=word;
-                else
-                if(x==4)
-                    bhk=word;
-                else
-                if(x==5)
-                    price=word;
-                else
-                if(x==6)
-                    phone=word;
-                else
-                if(x==7)
-                    possession=word;
-                else
-                if(x==8)
-                    detail=word;
 
-                else
-                if(x==9)
-                    url=word;
-
-                word="";
-                x++;
-                if(x>9 )
-                {
-                    x=0;
-                    datas.add(new PropertyCard(url,"Possession : "+possession,name,builder,address,phone,"Rs."+price));
-
-
+            //Show loader on url load
+            public void onLoadResource (WebView view, String url) {
+                if (progressDialog == null) {
+                    // in standard case YourActivity.this
+                    progressDialog = new ProgressDialog(SearchActivity.this);
+                    progressDialog.setMessage("Please wait while we search property for you...");
+                    progressDialog.show();
                 }
-
             }
-            i++;
-        }
-        http.text=null;
+            public void onPageFinished(WebView view, String url) {
+                try{
+                    if (progressDialog.isShowing()) {
+                        progressDialog.dismiss();
+                        progressDialog = null;
+                    }
+                }catch(Exception exception){
+                    exception.printStackTrace();
+                }
+            }
+
+        });
+
+
+        webView.getSettings().setJavaScriptEnabled(true);
+
+        webView.loadUrl(url);
+
     }
 }
