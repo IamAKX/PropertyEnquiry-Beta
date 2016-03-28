@@ -46,7 +46,7 @@ public class ResaleFragment extends Fragment {
         recyclerView = (RecyclerView)getActivity().findViewById(R.id.recyclerView);
         datas =new ArrayList<PropertyCard>();
         getPropertyData();
-        TextView textView = (TextView)getActivity().findViewById(R.id.textView4);
+        final TextView textView = (TextView)getActivity().findViewById(R.id.textView4);
         if(datas.size()!=0)
             textView.setVisibility(View.GONE);
         layoutManager = new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL,false);
@@ -68,6 +68,8 @@ public class ResaleFragment extends Fragment {
                         layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
                         adapter = new PropertyCardAdapter(datas);
                         recyclerView.setAdapter(adapter);
+                        if(datas.size()!=0)
+                            textView.setVisibility(View.GONE);
 
                         mSwipeRefreshLayout.setRefreshing(false);
                     }

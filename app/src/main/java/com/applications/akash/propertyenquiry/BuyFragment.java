@@ -52,7 +52,7 @@ public class BuyFragment extends Fragment {
 
 
         getPropertyData();
-        TextView textView = (TextView)getActivity().findViewById(R.id.textView4);
+        final TextView textView = (TextView)getActivity().findViewById(R.id.textView4);
         if(datas.size()!=0)
             textView.setVisibility(View.GONE);
 
@@ -76,6 +76,8 @@ public class BuyFragment extends Fragment {
                         layoutManager = new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL,false);
                         adapter = new PropertyCardAdapter(datas);
                         recyclerView.setAdapter(adapter);
+                        if(datas.size()!=0)
+                            textView.setVisibility(View.GONE);
 
                         mSwipeRefreshLayout.setRefreshing(false);
                     }
